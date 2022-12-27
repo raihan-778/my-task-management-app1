@@ -5,7 +5,7 @@ import CompletedTasks from "../../components/Tasks/CompletedTasks/CompletedTasks
 import MyTasks from "../../components/Tasks/MyTasks/MyTasks";
 import Root from "../Layout/Root";
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
