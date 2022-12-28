@@ -3,13 +3,13 @@ import { Button, TextInput, Label } from "flowbite-react";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthProvider";
 
-const Login = () => {
-  const [loginError, setLoginError] = useState("");
-  const [loginUseremail, setLoginUseremail] = useState("");
-  const { login, googleSignIn } = useContext(AuthContext);
-
+const SignUp = () => {
+  const [signUpError, setSignUpError] = useState("");
+  const [createdUseremail, setCreatedUserEmail] = useState("");
+  const { signUp, googleSignIn } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
@@ -21,20 +21,18 @@ const Login = () => {
     handleSubmit,
   } = useForm();
 
-  const handleLogin = (data) => {
+  const handleSignUp = (data) => {
     console.log(data);
-    login(data.email, data.password)
+    signUp(data.email, data.password)
       .then((result) => {
         const user = result.user;
         console.log(data.email);
-        setLoginUseremail(data.email);
-        user.uid && toast.success("User login successfully");
-
-        setLoginError("");
+        setCreatedUserEmail(data.email);
+        user.uid && toast.success("User Sign Up successfully");
       })
       .catch((err) => {
         console.error(err.message);
-        setLoginError(err.message);
+        setSignUpError(err.message);
       });
   };
   const handleGoogleSignIn = () => {
@@ -45,7 +43,7 @@ const Login = () => {
 
   return (
     <form
-      onSubmit={handleSubmit(handleLogin)}
+      onSubmit={handleSubmit(handleSignUp)}
       className="grid grid-cols-1 lg:w-1/2 md:1/2 w-full mx-auto gap-4"
     >
       <div className="w-full mx-auto">
@@ -62,7 +60,7 @@ const Login = () => {
         />
         {errors.email && (
           <p className="text-red-500" role="alert">
-            {errors.email?.message}
+            {errors.email?.signUpError}
           </p>
         )}
       </div>
@@ -71,14 +69,20 @@ const Login = () => {
           <Label htmlFor="password1" value="Your password" />
         </div>
         <TextInput
-          id="password1"
-          type="password"
-          placeholder="Type here"
-          // className="input input-bordered w-full max-w-xs"
           {...register("password", {
-            required: "Password is required",
+            minLength: 6,
+            required: "Password should be 6 caracter long or more",
+            pattern: {
+              value:
+                "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)” + “(?=.*[-+_!@#$%^&*., ?]).+$",
+              message:
+                "password include one Capital letter & one special character",
+            },
           })}
-          aria-invalid={errors.password ? "true" : "false"}
+          type="password"
+          name="password"
+          placeholder="Type here"
+          className="input input-bordered w-full max-w-xs"
         />
         {errors.password && (
           <p className="text-red-500" role="alert">
@@ -89,21 +93,14 @@ const Login = () => {
 
       <div>
         <Button className="w-24" type="submit">
-          Login
+          Sign Up
         </Button>
-        {loginError && (
-          <p className="text-orange-500 font-semibold">
-            Wrong email or Password!!
-          </p>
-        )}
       </div>
       <div className="text-left">
         {" "}
-        <Label className="text-2xl" value="New to this app!!" />
-        <Link to="/signup">
-          <span className="text-xl text-green-500">
-            Please Create an account
-          </span>
+        <Label className="text-2xl" value="Already have an account!!" />
+        <Link to="/login">
+          <span className="text-xl text-green-500">Please Login</span>
         </Link>
       </div>
       <div>
@@ -118,47 +115,7 @@ const Login = () => {
         </Button>{" "}
       </div>
     </form>
-
-    // <div className="flex  h-[800px] justify-center  items-center">
-    //   <div>
-    //     <h2 className="text-xl  font-bold">Login</h2>
-    //     <form onSubmit={handleSubmit(handleLogin)}>
-    //
-    //
-    //       <label className="label">
-    //         <span className="label-text">Forgot Password?</span>
-    //       </label>
-
-    //       <div>
-    //         <Button color="success" type="submit">
-    //           Login
-    //         </Button>
-    //       </div>
-
-    //       {loginError && (
-    //         <p className="text-orange-500 font-semibold">
-    //           Wrong email or Password!!
-    //         </p>
-    //       )}
-    //       {/* <label className="label">
-    //         <span className="label-text">
-    //           New to this app!{" "}
-    //           <Link to="/signup" className="text-secondary">
-    //             Create New Account.
-    //           </Link>
-    //         </span>
-    //       </label>
-    //       <div className="divider">OR</div>
-    //       <button
-    //         onClick={handleGoogleSignIn}
-    //         className="btn btn-outline w-full"
-    //       >
-    //         CONTINUE WITH GOOGLE
-    //       </button> */}
-    //     </form>
-    //   </div>
-    // </div>
   );
 };
 
-export default Login;
+export default SignUp;
