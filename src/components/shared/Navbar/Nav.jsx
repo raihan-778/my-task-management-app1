@@ -1,10 +1,13 @@
-import { Navbar } from "flowbite-react";
-import React from "react";
+import { Button, Navbar } from "flowbite-react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthProvider";
 
 const Nav = () => {
+  const { user, setUser, logOut } = useContext(AuthContext);
+  console.log(user.email);
   return (
-    <Navbar className="bg-indigo-800" fluid={true} rounded={true}>
+    <Navbar className="bg-cyan-700" fluid={true} rounded={true}>
       <Navbar.Brand to="https://flowbite.com/">
         <img
           src="https://flowbite.com/docs/images/logo.svg"
@@ -37,11 +40,22 @@ const Nav = () => {
             Completed tasks
           </Link>
         </Navbar.Link>
-        <Navbar.Link>
-          <Link className="text-slate-100" to="/login">
-            Login
-          </Link>
-        </Navbar.Link>
+        {user?.email ? (
+          <>
+            <small>{user.email}</small>
+            <Navbar.Link>
+              <Button onClick={logOut} className="text-slate-100">
+                Log Out
+              </Button>
+            </Navbar.Link>
+          </>
+        ) : (
+          <Navbar.Link>
+            <Link className="text-slate-100" to="/login">
+              Login
+            </Link>
+          </Navbar.Link>
+        )}
       </Navbar.Collapse>
     </Navbar>
   );

@@ -3,12 +3,13 @@ import { Button, TextInput, Label } from "flowbite-react";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Login = () => {
   const [loginError, setLoginError] = useState("");
   const [loginUseremail, setLoginUseremail] = useState("");
-  const { login, googleSignIn } = useContext(AuthContext);
+  const { login, user, googleSignUp } = useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const Login = () => {
         const user = result.user;
         console.log(data.email);
         setLoginUseremail(data.email);
+
         user.uid && toast.success("User login successfully");
 
         setLoginError("");
@@ -38,7 +40,7 @@ const Login = () => {
       });
   };
   const handleGoogleSignIn = () => {
-    googleSignIn(googleProvider)
+    googleSignUp(googleProvider)
       .then((result) => console.log(result.user))
       .catch((err) => console.error(err.message));
   };
@@ -99,7 +101,7 @@ const Login = () => {
       </div>
       <div className="text-left">
         {" "}
-        <Label className="text-2xl" value="New to this app!!" />
+        <Label className="text-2xl text-cyan-300" value="New to this app!!" />
         <Link to="/signup">
           <span className="text-xl text-green-500">
             Please Create an account
@@ -118,46 +120,6 @@ const Login = () => {
         </Button>{" "}
       </div>
     </form>
-
-    // <div className="flex  h-[800px] justify-center  items-center">
-    //   <div>
-    //     <h2 className="text-xl  font-bold">Login</h2>
-    //     <form onSubmit={handleSubmit(handleLogin)}>
-    //
-    //
-    //       <label className="label">
-    //         <span className="label-text">Forgot Password?</span>
-    //       </label>
-
-    //       <div>
-    //         <Button color="success" type="submit">
-    //           Login
-    //         </Button>
-    //       </div>
-
-    //       {loginError && (
-    //         <p className="text-orange-500 font-semibold">
-    //           Wrong email or Password!!
-    //         </p>
-    //       )}
-    //       {/* <label className="label">
-    //         <span className="label-text">
-    //           New to this app!{" "}
-    //           <Link to="/signup" className="text-secondary">
-    //             Create New Account.
-    //           </Link>
-    //         </span>
-    //       </label>
-    //       <div className="divider">OR</div>
-    //       <button
-    //         onClick={handleGoogleSignIn}
-    //         className="btn btn-outline w-full"
-    //       >
-    //         CONTINUE WITH GOOGLE
-    //       </button> */}
-    //     </form>
-    //   </div>
-    // </div>
   );
 };
 
