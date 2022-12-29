@@ -1,12 +1,14 @@
 import { Label, TextInput, Textarea } from "flowbite-react";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = () => {
     setMessage(title);
@@ -44,6 +46,7 @@ const Home = () => {
       .then((result) => {
         console.log(result);
         toast.success(`New task ${data.title} added successfully`);
+        navigate("/mytask");
       });
   };
 

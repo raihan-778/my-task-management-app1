@@ -1,5 +1,6 @@
 import { Button, Card } from "flowbite-react";
 import React from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const MyTasksCard = ({ myTask, refetch }) => {
@@ -15,9 +16,9 @@ const MyTasksCard = ({ myTask, refetch }) => {
         .then((data) => {
           console.log(data);
           if (data.deletedCount > 0) {
+            refetch();
             console.log(data);
             toast.success("Product Deteded successfully");
-            refetch();
           }
         });
     }
@@ -30,9 +31,9 @@ const MyTasksCard = ({ myTask, refetch }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
+          refetch();
           console.log(data);
           toast.success("Task Completed");
-          refetch();
         }
       });
   };
@@ -59,15 +60,17 @@ const MyTasksCard = ({ myTask, refetch }) => {
           </div>
         </div>
         <div>
-          <Button
-            onClick={() => handleComplete(_id)}
-            size="sm"
-            disabled={completed}
-            outline={true}
-            gradientDuoTone="greenToBlue"
-          >
-            Completed
-          </Button>
+          <Link to="/completedtask">
+            <Button
+              onClick={() => handleComplete(_id)}
+              size="sm"
+              disabled={completed}
+              outline={true}
+              gradientDuoTone="greenToBlue"
+            >
+              Completed
+            </Button>
+          </Link>
         </div>
       </Card>
     </div>

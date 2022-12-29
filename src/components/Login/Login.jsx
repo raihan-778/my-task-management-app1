@@ -8,13 +8,14 @@ import { AuthContext } from "../../context/AuthProvider";
 
 const Login = () => {
   const [loginError, setLoginError] = useState("");
-  const [loginUseremail, setLoginUseremail] = useState("");
   const { login, user, googleSignUp } = useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
-
+  if (user?.email) {
+    navigate(from, { replace: true });
+  }
   const googleProvider = new GoogleAuthProvider();
   const {
     register,
@@ -28,9 +29,9 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(data.email);
-        setLoginUseremail(data.email);
         user.uid && toast.success("User login successfully");
-        navigate(from, { replace: true });
+        navigate("/mytask");
+
         setLoginError("");
       })
       .catch((err) => {

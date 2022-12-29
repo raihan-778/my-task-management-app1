@@ -7,7 +7,8 @@ import Root from "../Layout/Root";
 import Login from "../../components/Login/Login";
 import SignUp from "../../components/Login/SignUp";
 import Media from "../../components/Tasks/MyTasks/Media/Media";
-import CompletedTasks from "../../components/Tasks/CompletedTasks/CompletedTasks";
+import PrivateRoute from "../../PrivateRoute/PrivateRoute";
+import Completed from "../../components/Tasks/Completed/Completed";
 
 export const router = createBrowserRouter([
   {
@@ -24,15 +25,23 @@ export const router = createBrowserRouter([
       },
       {
         path: "/mytask",
-        element: <MyTasks></MyTasks>,
+        element: (
+          <PrivateRoute>
+            <MyTasks></MyTasks>,
+          </PrivateRoute>
+        ),
       },
       {
         path: "/completedtask",
-        element: <CompletedTasks></CompletedTasks>,
+        element: <Completed></Completed>,
       },
       {
         path: "/Addtask",
-        element: <AddTask></AddTask>,
+        element: (
+          <PrivateRoute>
+            <AddTask></AddTask>,
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",

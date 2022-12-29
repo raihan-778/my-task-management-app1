@@ -6,8 +6,16 @@ import { AuthContext } from "../../../context/AuthProvider";
 const Nav = () => {
   const { user, setUser, logOut } = useContext(AuthContext);
   console.log(user.email);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        setUser("");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <Navbar fluid={true} rounded={true}>
+    <Navbar className="bg-indigo-400" fluid={true} rounded={true}>
       <Navbar.Brand to="https://flowbite.com/">
         <img
           src="https://flowbite.com/docs/images/logo.svg"
@@ -49,7 +57,7 @@ const Nav = () => {
           <>
             <small>{user.email}</small>
             <Navbar.Link>
-              <Button onClick={logOut} className="text-slate-700">
+              <Button onClick={handleLogOut} className="text-slate-700">
                 Log Out
               </Button>
             </Navbar.Link>
