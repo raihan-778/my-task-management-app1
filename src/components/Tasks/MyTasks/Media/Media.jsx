@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 const Media = () => {
   const { user } = useContext(AuthContext);
   console.log(user.email);
-  const url = `http://localhost:5000/media-task?email=${user?.email}`;
+  const url = `https://my-task-management-server.vercel.app/media-task?email=${user?.email}`;
 
   const {
     data: myTasks = [],

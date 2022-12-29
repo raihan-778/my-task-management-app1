@@ -33,7 +33,7 @@ const Home = () => {
       title: data.title,
       description: data.description,
     };
-    fetch("http://localhost:5000/all-task", {
+    fetch("https://my-task-management-server.vercel.app/all-task", {
       method: "POST",
       headers: {
         "content-type": "application/json",

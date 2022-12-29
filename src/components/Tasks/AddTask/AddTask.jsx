@@ -37,7 +37,7 @@ const AddTask = () => {
           title: data.title,
           description: data.description,
         };
-        fetch("http://localhost:5000/media-task", {
+        fetch("https://my-task-management-server.vercel.app/media-task", {
           method: "POST",
           headers: {
             "content-type": "application/json",

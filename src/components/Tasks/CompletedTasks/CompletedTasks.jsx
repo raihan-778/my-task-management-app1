@@ -5,7 +5,7 @@ import { AuthContext } from "../../../context/AuthProvider";
 const CompletedTasks = () => {
   const { user } = useContext(AuthContext);
   console.log(user.email);
-  const url = `http://localhost:5000/my-tasks/completed`;
+  const url = `https://my-task-management-server.vercel.app/my-tasks/completed`;
   const {
     data: myTasks = [],
     isLoading,

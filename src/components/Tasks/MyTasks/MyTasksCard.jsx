@@ -8,7 +8,7 @@ const MyTasksCard = ({ myTask, refetch }) => {
   const handleDelete = (id) => {
     const proceed = window.confirm("Are you sure you want delete this task?");
     if (proceed) {
-      fetch(`http://localhost:5000/my-tasks/${id}`, {
+      fetch(`https://my-task-management-server.vercel.app/my-tasks/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -24,7 +24,7 @@ const MyTasksCard = ({ myTask, refetch }) => {
   };
 
   const handleComplete = (id) => {
-    fetch(`http://localhost:5000/my-tasks/${id}`, {
+    fetch(`https://my-task-management-server.vercel.app/my-tasks/${id}`, {
       method: "PUT",
     })
       .then((res) => res.json())
