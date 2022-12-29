@@ -29,9 +29,8 @@ const Login = () => {
         const user = result.user;
         console.log(data.email);
         setLoginUseremail(data.email);
-
         user.uid && toast.success("User login successfully");
-
+        navigate(from, { replace: true });
         setLoginError("");
       })
       .catch((err) => {

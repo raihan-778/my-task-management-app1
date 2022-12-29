@@ -1,11 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../../components/Home/Home";
 import AddTask from "../../components/Tasks/AddTask/AddTask";
-import CompletedTasks from "../../components/Tasks/CompletedTasks/CompletedTasks";
+
 import MyTasks from "../../components/Tasks/MyTasks/MyTasks";
 import Root from "../Layout/Root";
 import Login from "../../components/Login/Login";
 import SignUp from "../../components/Login/SignUp";
+import Media from "../../components/Tasks/MyTasks/Media/Media";
+import CompletedTasks from "../../components/Tasks/CompletedTasks/CompletedTasks";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -14,6 +17,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/media",
+        element: <Media></Media>,
       },
       {
         path: "/mytask",

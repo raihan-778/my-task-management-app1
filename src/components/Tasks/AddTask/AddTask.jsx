@@ -37,7 +37,7 @@ const AddTask = () => {
           title: data.title,
           description: data.description,
         };
-        fetch("http://localhost:5000/all-task", {
+        fetch("http://localhost:5000/media-task", {
           method: "POST",
           headers: {
             "content-type": "application/json",

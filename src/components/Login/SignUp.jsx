@@ -10,9 +10,7 @@ const SignUp = () => {
   const [signUpError, setSignUpError] = useState("");
   const [createdUseremail, setCreatedUserEmail] = useState("");
   const { signUp, googleSignIn } = useContext(AuthContext);
-  const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
 
   const googleProvider = new GoogleAuthProvider();
   const {
@@ -29,6 +27,7 @@ const SignUp = () => {
         console.log(data.email);
         setCreatedUserEmail(data.email);
         user.uid && toast.success("User Sign Up successfully");
+        navigate("/mytask");
       })
       .catch((err) => {
         console.error(err.message);
