@@ -10,11 +10,10 @@ const CompletedCard = ({ task }) => {
         {title}
       </h5>
       <p className="font-normal text-gray-700 dark:text-gray-400">{date}</p>
-      <Link to="/mytask">
-        <Button outline={true} gradientDuoTone="purpleToBlue">
-          Not Completed
-        </Button>
-      </Link>
+
+      <Button outline={true} gradientDuoTone="purpleToBlue">
+        <Link to="/mytask">Not Completed</Link>
+      </Button>
     </Card>
   );
 };

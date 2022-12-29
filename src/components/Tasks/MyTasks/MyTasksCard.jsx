@@ -1,10 +1,12 @@
 import { Button, Card } from "flowbite-react";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import InlineEdit from "./InlineEdit/InlineEdit";
 
 const MyTasksCard = ({ myTask, refetch }) => {
   const { title, completed, date, _id } = myTask;
+  const [value, setValue] = useState("");
 
   const handleDelete = (id) => {
     const proceed = window.confirm("Are you sure you want delete this task?");
@@ -38,6 +40,11 @@ const MyTasksCard = ({ myTask, refetch }) => {
       });
   };
 
+  const handleUpdate = (id) => {
+    fetch(`https://my-task-management-server.vercel.app/my-tasks/${id}`, {
+      method: "PATCH",
+    });
+  };
   return (
     <div className="max-w-sm">
       <Card>
@@ -45,7 +52,11 @@ const MyTasksCard = ({ myTask, refetch }) => {
           Time: {date}
         </p>
         <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {title}
+          <InlineEdit
+            value={title}
+            defaultValue={title}
+            setValue={setValue}
+          ></InlineEdit>
         </h5>
         <div className="grid grid-cols-2">
           <div>
@@ -59,18 +70,17 @@ const MyTasksCard = ({ myTask, refetch }) => {
             </Button>
           </div>
         </div>
+
         <div>
-          <Link to="/completedtask">
-            <Button
-              onClick={() => handleComplete(_id)}
-              size="sm"
-              disabled={completed}
-              outline={true}
-              gradientDuoTone="greenToBlue"
-            >
-              Completed
-            </Button>
-          </Link>
+          <Button
+            onClick={() => handleComplete(_id)}
+            size="sm"
+            disabled={completed}
+            outline={true}
+            gradientDuoTone="greenToBlue"
+          >
+            <Link to="/completedtask">Completed</Link>
+          </Button>
         </div>
       </Card>
     </div>
