@@ -6,19 +6,16 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthProvider";
+import LoadingSpinner from "../shared/LoadingSpinner/LoadingSpinner";
 
 const Login = () => {
   const [loginError, setLoginError] = useState("");
-  const { login, user, googleSignUp } = useContext(AuthContext);
+  const { login, isLoading, setIsLoading, user, setUser, googleSignUp } =
+    useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
-
-  if (user.email) {
-    navigate(from, { replace: true });
-  }
-
   const googleProvider = new GoogleAuthProvider();
   const {
     register,
@@ -30,12 +27,13 @@ const Login = () => {
     console.log(data);
     login(data.email, data.password)
       .then((result) => {
-        const user = result.user;
+        const currentUser = result.user;
         console.log(data.email);
-
+        setUser(currentUser);
         user.uid && toast.success("User login successfully");
-        navigate("/mytask");
+        setIsLoading(false);
 
+        navigate("/mytask");
         setLoginError("");
       })
       .catch((err) => {
@@ -43,6 +41,9 @@ const Login = () => {
         setLoginError(err.message);
       });
   };
+  if (user.email) {
+    navigate(from, { replace: true });
+  }
   const handleGoogleSignIn = () => {
     googleSignUp(googleProvider)
       .then((result) => console.log(result.user))

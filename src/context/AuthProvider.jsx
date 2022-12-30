@@ -10,9 +10,9 @@ import {
 import { app } from "../firebase/firebase.config";
 
 export const AuthContext = createContext();
+const Auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-  const Auth = getAuth(app);
   const [user, setUser] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,11 +34,7 @@ const AuthProvider = ({ children }) => {
     setIsLoading(true);
     return signInWithPopup(Auth, provider);
   };
-  // SignOut
 
-  const logOut = () => {
-    signOut(Auth);
-  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(Auth, (currentUser) => {
       if (currentUser) {
@@ -50,6 +46,11 @@ const AuthProvider = ({ children }) => {
     return unsubscribe();
   }, [user]);
 
+  // SignOut
+
+  const logOut = () => {
+    return signOut(Auth);
+  };
   const authInfo = {
     signUp,
     login,

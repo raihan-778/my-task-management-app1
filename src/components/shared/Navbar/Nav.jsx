@@ -9,8 +9,12 @@ const Nav = () => {
   console.log(user.email);
   const handleLogOut = () => {
     console.log("click");
-    logOut();
-    setUser("");
+    logOut()
+      .then(() => {
+        console.log("clicked");
+        setUser("");
+      })
+      .catch((err) => console.error(err));
   };
 
   return (

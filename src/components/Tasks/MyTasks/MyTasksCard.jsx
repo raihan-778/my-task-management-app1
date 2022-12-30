@@ -9,13 +9,6 @@ const MyTasksCard = ({ myTask, refetch }) => {
   const [value, setValue] = useState("");
   const [edit, setEdit] = useState(false);
 
-  // const updateContent = (event) => {
-  //   const form = event.target;
-  //   const title = form.title.value;
-  //   setValue(title);
-  //   setEdit(false);
-  // };
-
   const handleDelete = (id) => {
     const proceed = window.confirm("Are you sure you want delete this task?");
     if (proceed) {
@@ -61,23 +54,21 @@ const MyTasksCard = ({ myTask, refetch }) => {
     const form = e.target;
     const editedTitle = form.content.value;
     console.log(editedTitle);
-    const UpdatedContent = {
-      title: editedTitle,
-    };
+    const updateTitle = { title: editedTitle };
 
-    fetch(`https://my-task-management-server.vercel.app/my-tasks/${_id})`, {
-      method: "PATCH",
+    fetch(`http://localhost:5000//my-tasks/${_id})`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(UpdatedContent),
+      body: JSON.stringify(updateTitle),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
-          refetch();
           console.log(data);
           toast.success("Task updated Successfuly");
+          refetch();
           setEdit(false);
         }
       });
@@ -94,8 +85,13 @@ const MyTasksCard = ({ myTask, refetch }) => {
             {edit ? (
               <>
                 {" "}
-                <input defaultValue={title} name="content" type="text" />
-                <input value="Save" type="submit" />
+                <input
+                  className="text-slate-400"
+                  defaultValue={title}
+                  name="content"
+                  type="text"
+                />
+                <input className="text-slate-400" value="Save" type="submit" />
               </>
             ) : (
               <>

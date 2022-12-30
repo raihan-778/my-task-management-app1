@@ -5,12 +5,12 @@ import { AuthContext } from "../context/AuthProvider";
 
 const PrivateRoute = ({ children }) => {
   const { user, isLoading } = useContext(AuthContext);
+  console.log(user.email);
   let location = useLocation();
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
-
   if (user?.uid) {
     return children;
   }

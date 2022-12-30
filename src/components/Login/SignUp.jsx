@@ -9,7 +9,7 @@ import { AuthContext } from "../../context/AuthProvider";
 const SignUp = () => {
   const [signUpError, setSignUpError] = useState("");
   const [createdUseremail, setCreatedUserEmail] = useState("");
-  const { signUp, googleSignIn } = useContext(AuthContext);
+  const { signUp, user, setUser, googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const googleProvider = new GoogleAuthProvider();
@@ -23,14 +23,15 @@ const SignUp = () => {
     console.log(data);
     signUp(data.email, data.password)
       .then((result) => {
-        const user = result.user;
+        const currentUser = result.user;
         console.log(data.email);
-        setCreatedUserEmail(data.email);
+        setUser(currentUser);
         user.uid && toast.success("User Sign Up successfully");
-        navigate("/mytask");
+        navigate("/");
       })
       .catch((err) => {
         console.error(err.message);
+        toast.error(err.message);
         setSignUpError(err.message);
       });
   };
