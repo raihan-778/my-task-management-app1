@@ -2,11 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { Button, Label, Textarea, TextInput } from "flowbite-react";
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthProvider";
 
 const AddTask = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const imgHostKey = "37e7a67acc4b35dd634f1b051a00876d";
 
@@ -48,6 +50,7 @@ const AddTask = () => {
           .then((result) => {
             console.log(result);
             toast.success(`New task ${data.title} added successfully`);
+            navigate("/media");
           });
       });
   };

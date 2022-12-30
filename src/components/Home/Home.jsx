@@ -7,14 +7,8 @@ import { AuthContext } from "../../context/AuthProvider";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
-  const [message, setMessage] = useState("");
+
   const navigate = useNavigate();
-
-  const handleChange = () => {
-    setMessage(title);
-  };
-
-  const handleClick = () => {};
 
   const {
     register,
