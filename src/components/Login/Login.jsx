@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import { GoogleAuthProvider } from "firebase/auth";
 import { Button, TextInput, Label } from "flowbite-react";
 import React, { useContext, useState } from "react";
@@ -13,9 +14,11 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
-  if (user?.email) {
+
+  if (user.email) {
     navigate(from, { replace: true });
   }
+
   const googleProvider = new GoogleAuthProvider();
   const {
     register,
@@ -29,6 +32,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(data.email);
+
         user.uid && toast.success("User login successfully");
         navigate("/mytask");
 

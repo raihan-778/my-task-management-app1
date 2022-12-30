@@ -2,11 +2,19 @@ import { Button, Card } from "flowbite-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import InlineEdit from "./InlineEdit/InlineEdit";
 
 const MyTasksCard = ({ myTask, refetch }) => {
   const { title, completed, date, _id } = myTask;
+  console.log(myTask);
   const [value, setValue] = useState("");
+  const [edit, setEdit] = useState(false);
+
+  // const updateContent = (event) => {
+  //   const form = event.target;
+  //   const title = form.title.value;
+  //   setValue(title);
+  //   setEdit(false);
+  // };
 
   const handleDelete = (id) => {
     const proceed = window.confirm("Are you sure you want delete this task?");
@@ -20,7 +28,7 @@ const MyTasksCard = ({ myTask, refetch }) => {
           if (data.deletedCount > 0) {
             refetch();
             console.log(data);
-            toast.success("Product Deteded successfully");
+            toast.success("Task Deteded successfully");
           }
         });
     }
@@ -40,24 +48,71 @@ const MyTasksCard = ({ myTask, refetch }) => {
       });
   };
 
-  const handleUpdate = (id) => {
-    fetch(`https://my-task-management-server.vercel.app/my-tasks/${id}`, {
+  // const updateContent = (e) => {
+  //   e.preventDefault();
+  //   const form = e.target;
+  //   const editedTitle = form.content.value;
+  //   console.log(editedTitle);
+  //   return editedTitle;
+  // };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const editedTitle = form.content.value;
+    console.log(editedTitle);
+    const UpdatedContent = {
+      title: editedTitle,
+    };
+
+    fetch(`https://my-task-management-server.vercel.app/my-tasks/${_id})`, {
       method: "PATCH",
-    });
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(UpdatedContent),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          refetch();
+          console.log(data);
+          toast.success("Task updated Successfuly");
+          setEdit(false);
+        }
+      });
   };
+
   return (
     <div className="max-w-sm">
       <Card>
         <p className="font-normal text-gray-700 dark:text-gray-400">
           Time: {date}
         </p>
-        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          <InlineEdit
-            value={title}
-            defaultValue={title}
-            setValue={setValue}
-          ></InlineEdit>
-        </h5>
+        <div>
+          <form onSubmit={handleUpdate}>
+            {edit ? (
+              <>
+                {" "}
+                <input defaultValue={title} name="content" type="text" />
+                <input value="Save" type="submit" />
+              </>
+            ) : (
+              <>
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  {title}
+                </h5>
+                <Button
+                  onClick={() => {
+                    setEdit(true);
+                  }}
+                >
+                  Edit
+                </Button>
+              </>
+            )}
+          </form>
+        </div>
         <div className="grid grid-cols-2">
           <div>
             <Button

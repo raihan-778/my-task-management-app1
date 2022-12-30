@@ -38,7 +38,6 @@ const AuthProvider = ({ children }) => {
 
   const logOut = () => {
     signOut(Auth);
-    setUser("");
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(Auth, (currentUser) => {

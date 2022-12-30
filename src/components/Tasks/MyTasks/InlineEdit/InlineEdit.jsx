@@ -1,3 +1,4 @@
+// import { Button, onClick } from "flowbite-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -38,14 +39,16 @@ const InlineEdit = ({ value, setValue, _id }) => {
   };
 
   return (
-    <input
-      type="text"
-      aria-label="Field name"
-      value={editingValue}
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-      onBlur={onBlur}
-    />
+    <>
+      <input
+        type="text"
+        aria-label="Field name"
+        value={editingValue}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        onBlur={onBlur}
+      />
+    </>
   );
 };
 export default InlineEdit;

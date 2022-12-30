@@ -6,12 +6,11 @@ import { AuthContext } from "../../../context/AuthProvider";
 const Nav = () => {
   const { user, setUser, logOut } = useContext(AuthContext);
   console.log(user.email);
+  console.log(user.email);
   const handleLogOut = () => {
-    logOut()
-      .then(() => {
-        setUser("");
-      })
-      .catch((err) => console.log(err));
+    console.log("click");
+    logOut();
+    setUser("");
   };
 
   return (
@@ -48,11 +47,11 @@ const Nav = () => {
             Add Task
           </Link>
         </Navbar.Link>
-        <Navbar.Link>
+        {/* <Navbar.Link>
           <Link className="text-slate-700" to="/completedtask">
             Completed tasks
           </Link>
-        </Navbar.Link>
+        </Navbar.Link> */}
         {user?.email ? (
           <>
             <small>{user.email}</small>
