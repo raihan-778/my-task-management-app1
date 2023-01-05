@@ -56,7 +56,7 @@ const MyTasksCard = ({ myTask, refetch }) => {
     console.log(editedTitle);
     const updateTitle = { title: editedTitle };
 
-    fetch(`http://localhost:5000//my-tasks/${_id})`, {
+    fetch(`https://my-task-management-app1-server.vercel.app/update/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -91,7 +91,9 @@ const MyTasksCard = ({ myTask, refetch }) => {
                   name="content"
                   type="text"
                 />
-                <input className="text-slate-400" value="Save" type="submit" />
+                <Button size="xs" className="mt-2 mx-auto" type="submit">
+                  Save
+                </Button>
               </>
             ) : (
               <>
@@ -99,6 +101,8 @@ const MyTasksCard = ({ myTask, refetch }) => {
                   {title}
                 </h5>
                 <Button
+                  size="xs"
+                  className="mx-auto"
                   onClick={() => {
                     setEdit(true);
                   }}
@@ -109,7 +113,8 @@ const MyTasksCard = ({ myTask, refetch }) => {
             )}
           </form>
         </div>
-        <div className="grid grid-cols-2">
+
+        <div className="grid mx-auto grid-cols-2">
           <div>
             <Button
               onClick={() => handleDelete(_id)}
@@ -120,18 +125,17 @@ const MyTasksCard = ({ myTask, refetch }) => {
               Delete
             </Button>
           </div>
-        </div>
-
-        <div>
-          <Button
-            onClick={() => handleComplete(_id)}
-            size="sm"
-            disabled={completed}
-            outline={true}
-            gradientDuoTone="greenToBlue"
-          >
-            <Link to="/completedtask">Completed</Link>
-          </Button>
+          <div>
+            <Button
+              onClick={() => handleComplete(_id)}
+              size="xs"
+              disabled={completed}
+              outline={true}
+              gradientDuoTone="greenToBlue"
+            >
+              <Link to="/completedtask">Completed</Link>
+            </Button>
+          </div>
         </div>
       </Card>
     </div>
